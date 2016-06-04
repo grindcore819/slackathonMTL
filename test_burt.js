@@ -28,7 +28,11 @@ controller.hears('(.*)prendre une marche', 'direct_message', function(bot, messa
 				callback : function(response, convo){
 					//TODO : Call back si quelqu'un dit oui
 					controller.storage.users.get(message.user, function(err, user) {
-						bot.user.list[0];
+						if (user && user.name) {
+							bot.reply(message, 'Hello ' + user.name + '!!');
+						} else{
+							bot.reply(message, 'Hello.');
+						}
 					});
 					convo.next();
 				}
