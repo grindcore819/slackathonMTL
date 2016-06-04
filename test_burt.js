@@ -18,7 +18,41 @@ var bot = controller.spawn({
     token: process.env.token
 }).startRTM();
 
-controller.hears('(.*)prendre une marche', 'direct_message', function(bot, message){
+controller.hears('(.*)prendre une marche avec(.*)', 'direct_message', function(bot, message){
+    //Définir ce que l'on fait si 
+    bot.startConversation(message, function(err, convo) {
+        if (!err) {
+            //TODO : pick a random user
+            convo.ask("VPRENDRE UNE MARCHE AVEC !!! YEAH", [
+            {
+                pattern : 'oui',
+                callback : function(response, convo){
+                    //TODO : Call back si quelqu'un dit oui
+                    controller.storage.users.get(message.user, function(err, user) {
+                        bot.user.list[0];
+                    });
+                    convo.next();
+                }
+            },
+            {
+                pattern: 'non',
+                callback: function(response, convo) {
+                    //TODO : Callback si quelqu'un dit non
+                    convoo.next();
+                }
+            },
+            {
+                default: true,
+                callback: function(response, convo) {
+                    //TODO : CallBack si quelqu'un dit de quoi qui n'a pas rapport
+                }
+            }
+            ]);
+        };
+    });
+});
+
+controller.hears('(.*)prendre une marche\.', 'direct_message', function(bot, message){
 	bot.startConversation(message, function(err, convo) {
 		if (!err) {
 			//TODO : pick a random user
@@ -52,9 +86,7 @@ controller.hears('(.*)prendre une marche', 'direct_message', function(bot, messa
 });
 
 
-controller.hears('(.*)prendre une marche avec(.*)', 'direct_message', function(err, user){
-	//Définir ce que l'on fait si 
-});
+
 
 controller.hears(['shutdown'], 'direct_message,direct_mention,mention', function(bot, message) {
 
