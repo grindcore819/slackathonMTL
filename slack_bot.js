@@ -62,7 +62,10 @@ This bot demonstrates many of the core features of Botkit:
     -> http://howdy.ai/botkit
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
+var os = require('os');
+if(os.platform()==='win32'){
+	process.env.token = "xoxb-48233867618-PrmLR9pr5dDnTZu8mJ9tluGR"	
+}
 
 if (!process.env.token) {
     console.log('Error: Specify token in environment');
@@ -70,7 +73,6 @@ if (!process.env.token) {
 }
 
 var Botkit = require('./lib/Botkit.js');
-var os = require('os');
 
 var controller = Botkit.slackbot({
     debug: true,
