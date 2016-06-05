@@ -1,11 +1,26 @@
-# Developing with Botkit
+# Alex 
 
-Table of Contents
+-Table of Contents 
+-*[Comment l'idée nous est venue](comment-lidee-nous-est-venue)
+-*[Pourquoi prendre des pauses?](pourquoi-prendre-des-pauses)
+-*[Les Bienfaits d'Alex](les-bienfaits-dalex)
+-*[Brainstorming](brainstorming)
+-*[Landing page](landing-page)
+-*[Comment utiliser notre robot](comment-utiliser-notre-robot)
+-*[Comment installer le robot](comment-installer-le-robot) 
+-*[Quel Channel ?](quel-channel)
 
-* [Receiving Messages](#receiving-messages)
-* [Sending Messages](#sending-messages)
-* [Middleware](#middleware)
-* [Advanced Topics](#advanced-topics)
+## Comment l'idée nous est venue 
+On aime vraiment beaucoup les fumeurs - on les envie. Ils ont quelque chose que les autres n’ont pas : une excuse en béton pour prendre des pauses, socialisenr, se déconnectent du travail pendant 15 minutes pour mieux y revenir.
+
+## Pourquoi prendre des pauses ? 
+- Augmente la productivité 
+- Diminution du stress
+- Meilleure santé physique 
+
+## Les bienfaits d'Alex
+
+Alex vous aide à assurer la productivité de vos employés en les encourageant à prendre des pauses régulières et efficaces. Plus besoin de fumer pour avoir une raison de prendre une pause !
 
 # Brainstorming 
 Nous avons utilisé un lean canvas afin de nous aider à avoir un brainstorm efficace. Cela nous a permis de bien identifier notre public cible ainsi que nos objectifs lors de la création de notre slack bot.
