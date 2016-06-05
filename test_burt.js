@@ -52,7 +52,7 @@ controller.hears('(.*)prendre une marche avec(.*)', 'direct_message', function(b
     });
 });
 
-controller.hears('(.*)prendre une marche\.', 'direct_message', function(bot, message){
+controller.hears('(.*)prendre une marche', 'direct_message', function(bot, message){
 	bot.startConversation(message, function(err, convo) {
 		if (!err) {
 			//TODO : pick a random user
