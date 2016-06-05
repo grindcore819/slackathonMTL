@@ -63,6 +63,9 @@ This bot demonstrates many of the core features of Botkit:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 var os = require('os');
+var usrs;
+
+
 if(os.platform()==='win32'){
 	process.env.token = "xoxb-48233867618-PrmLR9pr5dDnTZu8mJ9tluGR"	
 }
@@ -75,9 +78,10 @@ if (!process.env.token) {
 var Botkit = require('./lib/Botkit.js');
 
 var controller = Botkit.slackbot({
-    debug: true,
+    debug: false,
     json_file_store: '../dbjson/',
 });
+
 
 var bot = controller.spawn({
     token: process.env.token
@@ -251,17 +255,23 @@ controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your na
 
     });
 
-controller.hears('hey', 'direct_message', function(bot, message){
-    bot.startConversation(message, function(err, convo) {
+controller.hears('hey', 'direct_message,direct_mention,mention', function(bot, message){
+bot.startConversation(message, function(err, convo) {
         console.log("haha");
         if (!err) {
+
+            options = {
+                'token': 'xoxp-39289615190-48204034086-48257840853-b3c1a0139e'
+            };
+            bot.api.users.list(options, function(err, mess){usrs = mess.members;});
+
             //TODO : pick a random user
             convo.ask("Voullez-vous choisir avec qui prendre une marche?", [
             {
                 pattern : 'oui',
                 callback : function(response, convo){
                     //TODO : Call back si quelqu'un dit oui
-                    controller.storage.users.get(message.user, function(err, user) {
+                    controller.storage.users.get(message.user, function(err, user){
                         if (user && user.name) {
                             bot.reply(message, 'Hello ' + user.name + '!!');
                         } else{
@@ -275,7 +285,8 @@ controller.hears('hey', 'direct_message', function(bot, message){
                 pattern: 'non',
                 callback: function(response, convo) {
                     //TODO : Callback si quelqu'un dit non donc veux une personne random
-                    getRandomUser("2");
+                    console.log(message.user);
+                    //getRandomUser(bot.);
 
                     convo.next();
                 }
@@ -291,14 +302,17 @@ controller.hears('hey', 'direct_message', function(bot, message){
     });
 });
 
-function getRandomUser(curentUser){
-getTeamMembers();
+function getRandomUser(currentUser){
+    var randUser;
+    do{
+        Math.floor(Math.random() * usrs.length);
+        randUser = usrs[Math.floor(Math.random() * usrs.length)];
+    }
+    while (randUser.profile.bot_id != null && randUser.id != currentUser && randUser.profile.first_name == 'slackbot')
+        return randUser;
 }
 
-function getTeamMembers(){
-    console.log(controller.storage.users.all(function(err, all_user_data){console.log(all_user_data)}));
-    
-}
+
 
 function formatUptime(uptime) {
     var unit = 'second';
