@@ -18,42 +18,84 @@ var bot = controller.spawn({
     token: process.env.token
 }).startRTM();
 
-controller.hears('(.*)prendre une marche avec(.*)', 'direct_message', function(bot, message){
-    //Définir ce que l'on fait si 
+
+controller.hears('(.*)prendre une marche avec(.*)', 'direct_message,direct_mention,mention', function(bot, message){
+    console.log("---------------------00000000000000000000000000000000000-------------------------")
+console.log(/*Object.getOwnPropertyNames(*/this.storage.users.all);
+
+    console.log("------------------------------");
+    console.log("je suis entré !!!");
+
+
+
+    // Get le user qui envoie la demande pour marcher 
+    var userSender = message.user;
+
+    // Get le user qui se fait demander d'aller marcher 
+    var userReceiver = message.match[2];
+
+    // Change le user à recevoir un message 
+    message.user=userReceiver.replace(/<|\ |@|>/g,"");
+
+
+
     bot.startConversation(message, function(err, convo) {
+            console.log("------------------------------");
+    console.log("je suis entré !!!");
         if (!err) {
-            //TODO : pick a random user
-            convo.ask("VPRENDRE UNE MARCHE AVEC !!! YEAH", [
-            {
-                pattern : 'oui',
-                callback : function(response, convo){
-                    //TODO : Call back si quelqu'un dit oui
-                    controller.storage.users.get(message.user, function(err, user) {
-                        bot.user.list[0];
-                    });
+            //TODO : Envoyer un message privé à l'utilisateur pour lui demander s'il est disponible 
+                bot.startPrivateConversation(message, function(err, convo) {
+                if (!err) {
+
+                    convo.ask("Veux-tu aller prendre une marche avec <@" + userSender + "> ?" , [
+                    {
+                        pattern : 'oui',
+                        callback : function(response, convo){
+                            // Robot confirme le match au sender : receiver a accepté la marche
+                            console.log("------------------------------");
+                            console.log(message);
+                            console.log("------------------------------");
+                            var message2 = message; 
+                            message2.user=userSender;
+                            bot.startPrivateConversation(message2,function(err,convo) {
+                                convo.say(userReceiver + " a dit oui");
+                                //convo.next();
+                            });
+                            convo.next();
+                        }
+                    },
+                    {
+                        pattern: 'non',
+                        callback: function(response, convo) {
+                            // Robot confirme le match au sender : receiver a refusé la marche
+                            message.user=userSender;
+                            bot.startPrivateConversation(message,function(err,convo) {
+                                convo.say("<@" + userReceiver + "> a dit non. :(");
+                                convo.next();
+                            });
+                        }
+                    },
+                    {
+                        default: true,
+                        callback: function(response, convo) {
+                            //TODO : CallBack si quelqu'un dit de quoi qui n'a pas rapport
+                            convo.say("Je n'ai pas compris.");
+                            //convo.repeat();
+                            convo.next();
+                        }
+                    }
+
+                    ]);
                     convo.next();
                 }
-            },
-            {
-                pattern: 'non',
-                callback: function(response, convo) {
-                    //TODO : Callback si quelqu'un dit non
-                    convoo.next();
-                }
-            },
-            {
-                default: true,
-                callback: function(response, convo) {
-                    //TODO : CallBack si quelqu'un dit de quoi qui n'a pas rapport
-                }
-            }
-            ]);
+            });
         };
     });
 });
 
 controller.hears('(.*)prendre une marche', 'direct_message', function(bot, message){
 	bot.startConversation(message, function(err, convo) {
+        console.log(" aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		if (!err) {
 			//TODO : pick a random user
 			convo.ask("Voulez-vous prendre une marche avec quelqu'un?", [
@@ -75,7 +117,7 @@ controller.hears('(.*)prendre une marche', 'direct_message', function(bot, messa
 				pattern: 'non',
 				callback: function(response, convo) {
 					//TODO : Callback si quelqu'un dit non
-					convoo.next();
+					convo.next();
 				}
 			},
 			{
