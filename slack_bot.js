@@ -76,6 +76,7 @@ var Botkit = require('./lib/Botkit.js');
 
 var controller = Botkit.slackbot({
     debug: true,
+    json_file_store: '../dbjson/',
 });
 
 var bot = controller.spawn({
@@ -237,7 +238,7 @@ controller.hears(['shutdown'], 'direct_message,direct_mention,mention', function
     });
 });
 
-*/
+
 controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your name'],
     'direct_message,direct_mention,mention', function(bot, message) {
 
@@ -249,6 +250,55 @@ controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your na
              '>. I have been running for ' + uptime + ' on ' + hostname + '.');
 
     });
+
+controller.hears('hey', 'direct_message', function(bot, message){
+    bot.startConversation(message, function(err, convo) {
+        console.log("haha");
+        if (!err) {
+            //TODO : pick a random user
+            convo.ask("Voullez-vous choisir avec qui prendre une marche?", [
+            {
+                pattern : 'oui',
+                callback : function(response, convo){
+                    //TODO : Call back si quelqu'un dit oui
+                    controller.storage.users.get(message.user, function(err, user) {
+                        if (user && user.name) {
+                            bot.reply(message, 'Hello ' + user.name + '!!');
+                        } else{
+                            bot.reply(message, 'Hello.');
+                        }
+                    });
+                    convo.next();
+                }
+            },
+            {
+                pattern: 'non',
+                callback: function(response, convo) {
+                    //TODO : Callback si quelqu'un dit non donc veux une personne random
+                    getRandomUser("2");
+
+                    convo.next();
+                }
+            },
+            {
+                default: true,
+                callback: function(response, convo) {
+                    //TODO : CallBack si quelqu'un dit de quoi qui n'a pas rapport
+                }
+            }
+            ]);
+        };
+    });
+});
+
+function getRandomUser(curentUser){
+getTeamMembers();
+}
+
+function getTeamMembers(){
+    console.log(controller.storage.users.all(function(err, all_user_data){console.log(all_user_data)}));
+    
+}
 
 function formatUptime(uptime) {
     var unit = 'second';

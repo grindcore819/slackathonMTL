@@ -52,11 +52,12 @@ controller.hears('(.*)prendre une marche avec(.*)', 'direct_message', function(b
     });
 });
 
-controller.hears('(.*)prendre une marche\.', 'direct_message', function(bot, message){
+controller.hears('hey', 'direct_message', function(bot, message){
 	bot.startConversation(message, function(err, convo) {
+        console.log("haha");
 		if (!err) {
 			//TODO : pick a random user
-			convo.ask("Voulez-vous prendre une marche avec quelqu'un?", [
+			convo.ask("Voullez-vous choisir avec qui prendre une marche?", [
 			{
 				pattern : 'oui',
 				callback : function(response, convo){
