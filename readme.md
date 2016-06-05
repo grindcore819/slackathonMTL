@@ -1,17 +1,8 @@
 # Alex 
 
--Table of Contents 
--*[Comment l'idée nous est venue](comment-lidee-nous-est-venue)
--*[Pourquoi prendre des pauses?](pourquoi-prendre-des-pauses)
--*[Les Bienfaits d'Alex](les-bienfaits-dalex)
--*[Brainstorming](brainstorming)
--*[Landing page](landing-page)
--*[Comment utiliser notre robot](comment-utiliser-notre-robot)
--*[Comment installer le robot](comment-installer-le-robot) 
--*[Quel Channel ?](quel-channel)
 
 ## Comment l'idée nous est venue 
-On aime vraiment beaucoup les fumeurs - on les envie. Ils ont quelque chose que les autres n’ont pas : une excuse en béton pour prendre des pauses, socialisenr, se déconnectent du travail pendant 15 minutes pour mieux y revenir.
+Lors de nos stages en entreprise, nous avons remarqué que les seules personnes qui prenaient des pauses de façon régulière étaient les fumeurs. Nous avons compris que leur avantage sur les autres est qu'il ont une excuse en béton pour prendre des pauses, socialiser. Et on constate que se déconnecter du travail pendant 15 minutes permet de mieux y revenir et de gagner en productivité.
 
 ## Pourquoi prendre des pauses ? 
 - Augmente la productivité 
@@ -32,9 +23,9 @@ Nous avons réalisé une landing page afin de présenter notre projet. La page e
 # Comment utiliser notre robot 
 Pour utiliser notre robot : 
 
-1. Lors de votre connexion, Alex vou demandera si vous souhaitez aller marcher aujourd'hui.
+1. Lors de votre connexion à Slack, Alex vous demandera si vous souhaitez aller marcher aujourd'hui.
 
-2. Si vous êtes prêts à aller marcher, dites en message privé à Alex que vous souhaitez aller marcher. Deux options s'offrent à vous: `Je veux prendre une marche` qui vous assignera un collègue de façon aléatoire avec qui aller marcher, ou `Je veux aller marcher avec @Albert` Identifiez le nom de la personne avec qui vous souhaitez aller marcher. 
+2. Si vous êtes prêts à aller marcher, dites en message privé à Alex que vous souhaitez aller marcher. Deux options s'offrent à vous: `Je veux prendre une marche` qui vous assignera un collègue de façon aléatoire avec qui aller marcher, ou bien `Je veux aller marcher avec @Albert` Identifiez le nom de la personne avec qui vous souhaitez aller marcher. 
 
 3. La personne que vous avez choisie pour aller marcher recevra un message de la part d'Alex lui proposant d'aller marcher. Celle-ci a le choix d'accepter ou de refuser. Si vous n'avez spécifié aucun collègue, alors une personne aléatoire recevra ce message. 
 
@@ -62,17 +53,17 @@ Pour utiliser notre robot :
 
 3. [Obtenir le Token](https://api.slack.com/docs/oauth-test-tokens) correspondant à la team Slack où vous désirez ajouter un bot 
 
-4. À la ligne 3 du fichier `test_burt.js`, entrez le token du robot : 
+4. À la ligne 3 du fichier `alex.js`, entrez le token du robot : 
     `process.env.token = "XXXXXXXXXXXXXXXXXXXXXXXX"`
 
-5. À la ligne 22 du fichier `test_burt.js`, entrez le token de la team slack : 
+5. À la ligne 22 du fichier `alex.js`, entrez le token de la team slack : 
 `options = {
     'token' : 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
  };`
 
 6. Pour exécuter votre robot, entrez la commande suivante dans un terminal : 
  
-`token="XXXXXXXXXXXXXXXXXXXXX" node test_burt.js`
+`token="XXXXXXXXXXXXXXXXXXXXX" node alex.js`
 
 Avec le token correspondant à votre team slack. 
 
