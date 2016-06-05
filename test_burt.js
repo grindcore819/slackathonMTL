@@ -9,7 +9,7 @@ if (!process.env.token) {
 }
 
 var Botkit = require('./lib/Botkit.js');
-
+var users_willing = new Array();
 var controller = Botkit.slackbot({
     debug: true,
 });
@@ -18,6 +18,39 @@ var bot = controller.spawn({
     token: process.env.token
 }).startRTM();
 
+controller.on("presence_change", function(err, message){
+	if(message.presence === 'active'){
+		bot.startPrivateConversation(message, function(err, convo){
+			if(!err){
+				convo.ask("Souhaiteriez vous aller prendre une marche aujourd'hui?", [
+				{
+					pattern : "oui",
+					callback : function(response, convo){
+						users_willing[response.user] = "oui";
+						convo.next();
+					}
+				},
+				{
+					pattern : "non",
+					callback : function(response,convo){
+						
+						users_willing[response.user] = "non";
+						convo.next();
+					}
+				},
+				{
+					default : true,
+					callback : function(response, convo){
+						convo.repeat();
+						convo.next();
+					}
+				}
+				]);
+				console.log(users_willing);
+			}
+		});
+	}
+});
 
 controller.hears('(.*)prendre une marche avec(.*)', 'direct_message,direct_mention,mention', function(bot, message){
     console.log("---------------------00000000000000000000000000000000000-------------------------")
